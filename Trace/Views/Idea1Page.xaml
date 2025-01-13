@@ -27,17 +27,18 @@
 
                     <nodify:NodifyEditor
                         Grid.Row="0"
-                        Connections="{Binding NodeEditor.Connections}"
-                        ItemsSource="{Binding NodeEditor.Nodes}"
-                        PendingConnection="{Binding NodeEditor.PendingConnection}">
-                        
+                        Connections="{Binding Connections}"
+                        DataContext="{Binding NodeEditor}"
+                        ItemsSource="{Binding Nodes}"
+                        PendingConnection="{Binding PendingConnection}">
+
                         <nodify:NodifyEditor.ItemContainerStyle>
                             <Style TargetType="{x:Type nodify:ItemContainer}">
                                 <Setter Property="Location" Value="{Binding Location}" />
                             </Style>
                         </nodify:NodifyEditor.ItemContainerStyle>
-                        
-                        <nodify:NodifyEditor.ItemTemplate>
+
+                        <nodify:NodifyEditor.Resources>
                             <DataTemplate DataType="{x:Type vmNode:NodeWithConnectorsVM}">
 
                                 <nodify:Node
@@ -62,11 +63,48 @@
                                         </DataTemplate>
                                     </nodify:Node.OutputConnectorTemplate>
 
+
                                 </nodify:Node>
 
 
                             </DataTemplate>
-                        </nodify:NodifyEditor.ItemTemplate>
+
+                            <DataTemplate DataType="{x:Type vmNode:NodeDBTableVM}">
+                                <nodify:Node Header="{Binding TableName}">
+                                    <StackPanel>
+                                        <ItemsControl Height="50" ItemsSource="{Binding Columns}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <nodify:NodeOutput DataContext="{Binding Connector}"
+                                                            Anchor="{Binding Anchor, Mode=OneWayToSource}"
+                                                            Header="{Binding Path=DataContext.ColumnName,
+                                                            RelativeSource={RelativeSource  AncestorType=StackPanel} }"
+                                                            IsConnected="{Binding IsConnected}">
+
+                                                            <nodify:NodeOutput.Style>
+                                                                <Style TargetType="{x:Type nodify:NodeOutput}">
+                                                                    <Setter Property="Template">
+                                                                        <Setter.Value>
+                                                                            <ControlTemplate TargetType="{x:Type nodify:NodeOutput}">
+                                                                                <TextBlock Text="{TemplateBinding Header}" />
+                                                                            </ControlTemplate>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                </Style>
+                                                            </nodify:NodeOutput.Style>
+
+                                                        </nodify:NodeOutput>
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+
+                                </nodify:Node>
+                            </DataTemplate>
+
+                        </nodify:NodifyEditor.Resources>
 
                         <nodify:NodifyEditor.ConnectionTemplate>
                             <DataTemplate DataType="{x:Type vmNode:ConnectionVM}">

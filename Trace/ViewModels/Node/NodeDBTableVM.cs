@@ -10,7 +10,7 @@ namespace Trace.ViewModels.Node
         [ObservableProperty]
         private string _tableName;
 
-        public ObservableCollection<ColumnVM> Columns;
+        public ObservableCollection<ColumnVM> Columns { get; set; }
 
         public NodeDBTableVM()
         {
@@ -27,7 +27,9 @@ namespace Trace.ViewModels.Node
     // カラムを表現するクラス
     public class ColumnVM
     {
-        public string ColumnName { get; set; }
-        public string DataType { get; set; }
+        public string ColumnName { get; set; } = "default";
+        public string DataType { get; set; } = "string";
+
+        public ConnectorVM Connector { get; set; } = new ConnectorVM();
     }
 }

@@ -78,8 +78,19 @@ namespace Trace.ViewModels
             }
             };
 
+            var testTable = new NodeDBTableVM
+            {
+                TableName = "TestTable",
+                Columns = new ObservableCollection<ColumnVM>
+                {
+                    new ColumnVM { ColumnName = "Column1", DataType = "int" },
+                    new ColumnVM { ColumnName = "Column2", DataType = "string" }
+                }
+            };
+
             Nodes.Add(welcome);
             Nodes.Add(nodify);
+            Nodes.Add(testTable);
 
             this.Connect(welcome.Output[0], nodify.Input[0]);
         }
