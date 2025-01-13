@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="Trace.Views.Controls.FormCanvas"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Trace.Views.Controls"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:b="clr-namespace:Trace.Behavior"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+
+        <ControlTemplate x:Key="MoveThumbTemplate" TargetType="{x:Type Thumb}">
+            <Rectangle Fill="Transparent"/>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="ResizeDecoratorTemplate" TargetType="Control">
+            <Grid>
+                <Thumb Height="2" Cursor="SizeNS" Margin="0 -4 0 0"
+                       Background="Blue"
+                       VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                       DragDelta="ResizeThumb_DragDelta"/>
+                <Thumb Width="2" Cursor="SizeWE" Margin="-4 0 0 0"
+                       Background="Blue"
+                       VerticalAlignment="Stretch" HorizontalAlignment="Left"
+                       DragDelta="ResizeThumb_DragDelta"/>
+                <Thumb Width="2" Cursor="SizeWE" Margin="0 0 -4 0"
+                       Background="Blue"
+                       VerticalAlignment="Stretch" HorizontalAlignment="Right"
+                       DragDelta="ResizeThumb_DragDelta"/>
+                <Thumb Height="2" Cursor="SizeNS" Margin="0 0 0 -4"
+                       VerticalAlignment="Bottom"  HorizontalAlignment="Stretch"
+                       Background="Blue"
+                       DragDelta="ResizeThumb_DragDelta"/>
+                <Thumb Width="7" Height="7" Cursor="SizeNWSE" Margin="-6 -6 0 0"
+                       Background="Blue"
+                       VerticalAlignment="Top" HorizontalAlignment="Left"
+                       DragDelta="ResizeThumb_DragDelta"/>
+                <Thumb Width="7" Height="7" Cursor="SizeNESW" Margin="0 -6 -6 0"
+                       Background="Blue"
+                       VerticalAlignment="Top" HorizontalAlignment="Right"
+                       DragDelta="ResizeThumb_DragDelta"/>
+                <Thumb Width="7" Height="7" Cursor="SizeNESW" Margin="-6 0 0 -6"
+                       Background="Blue"
+                       VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                       DragDelta="ResizeThumb_DragDelta"/>
+                <Thumb Width="7" Height="7" Cursor="SizeNWSE" Margin="0 0 -6 -6"
+                       Background="Blue"
+                       VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                       DragDelta="ResizeThumb_DragDelta"/>
+            </Grid>
+        </ControlTemplate>
+
+        <ControlTemplate x:Key="DesignerItemTemplate" TargetType="ContentControl">
+            <Grid DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                <Thumb x:Name="MoveThumb"
+                        DragDelta="MoveThumb_DragDelta"
+                       Template="{StaticResource MoveThumbTemplate}"
+                       Cursor="SizeAll"
+                       Visibility="Hidden"/>
+                <Control x:Name="ResizeDecorator"
+                         Template="{StaticResource ResizeDecoratorTemplate}"
+                         Visibility="Hidden"/>
+                <ContentPresenter Content="{TemplateBinding ContentControl.Content}"/>
+            </Grid>
+        </ControlTemplate>
+    </UserControl.Resources>
+
+    <Canvas x:Name="MyCanvas"
+            Background="Transparent">
+        <i:Interaction.Behaviors>
+            <b:MultiSelectBehavior
+                x:Name="multiSelectBehavior"
+                SelectionChanged="multiSelectBehavior_SelectionChanged"/>
+        </i:Interaction.Behaviors>
+    </Canvas>
+    
+</UserControl>

@@ -1,0 +1,102 @@
+﻿<!--https://www.yone-it-note.site/wpf-customcontrol-basedon-standardcontrol/
+    https://blog.okazuki.jp/entry/20091025/1256472760-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:Trace.Views.Controls">
+
+    <Style TargetType="Button" x:Key="TitleBarButtonStyle">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="Width" Value="40" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Background" Value="{DynamicResource Primary_300}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="BaseWindowStyle" TargetType="{x:Type Window}">
+        <Setter Property="WindowStyle" Value="None" />
+
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome
+                        ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}"
+                        UseAeroCaptionButtons="False"
+                        CornerRadius="15"
+                        CaptionHeight="{x:Static SystemParameters.CaptionHeight}"
+                        GlassFrameThickness="0" />
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Window}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="24" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid x:Name="titleBar" Background="{Binding TitleBarBackground, RelativeSource={RelativeSource AncestorType=controls:BaseWindow}}">
+                            <TextBlock Text="{TemplateBinding Title}" 
+                                       Foreground="{Binding TitleBarForeground,RelativeSource={RelativeSource AncestorType=controls:BaseWindow}}"
+                                       FontSize="16"
+                                       Margin="12,0,2,0" />
+                            <UniformGrid Rows="1" HorizontalAlignment="Right">
+                                <Button x:Name="MinimizeButton" Style="{StaticResource TitleBarButtonStyle}">
+                                    <Viewbox Width="16" Height="16">
+                                        <Path Data="M240-120v-80h480v80H240Z"
+                                Fill="{Binding TitleBarForeground,RelativeSource={RelativeSource AncestorType=controls:BaseWindow}}"
+                                Stretch="Fill" />
+                                    </Viewbox>
+                                </Button>
+                                <Button x:Name="MaximizeButton" Style="{StaticResource TitleBarButtonStyle}">
+                                    <Viewbox Width="16" Height="16">
+                                        <Path Data="M160-80q-33 0-56.5-23.5T80-160v-360q0-33 23.5-56.5T160-600h80v-200q0-33 23.5-56.5T320-880h480q33 0 56.5 23.5T880-800v360q0 33-23.5 56.5T800-360h-80v200q0 33-23.5 56.5T640-80H160Zm0-80h480v-280H160v280Zm560-280h80v-280H320v120h320q33 0 56.5 23.5T720-520v80Z"
+                                Fill="{Binding TitleBarForeground,RelativeSource={RelativeSource AncestorType=controls:BaseWindow}}"
+                                Stretch="Fill" />
+                                    </Viewbox>
+                                </Button>
+                                <Button x:Name="CloseButton" >
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource TitleBarButtonStyle}">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="true">
+                                                    <Setter Property="Background" Value="Red"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                    
+                                    <Viewbox Width="16" Height="16">
+                                        <Path Data="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
+                                Fill="{Binding TitleBarForeground,RelativeSource={RelativeSource AncestorType=controls:BaseWindow}}"
+                                Stretch="Fill" />
+                                    </Viewbox>
+                                </Button>
+                            </UniformGrid>
+                        </Grid>
+                        <controls:BusyShield
+                            x:Name="BusyShieldControl"
+                            Grid.Row="1"
+                             BusyMessage="お待ちください。"
+                             BusyBackground="Gray"
+                            >
+                            <ContentPresenter Grid.Row="1" />
+                        </controls:BusyShield>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
