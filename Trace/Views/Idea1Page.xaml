@@ -62,44 +62,45 @@
                                                 IsConnected="True" />
                                         </DataTemplate>
                                     </nodify:Node.OutputConnectorTemplate>
-
-
                                 </nodify:Node>
-
-
                             </DataTemplate>
 
                             <DataTemplate DataType="{x:Type vmNode:NodeDBTableVM}">
-                                <nodify:Node Header="{Binding TableName}">
+                                <nodify:Node Header="{Binding TableName}"
+                                             Input="{Binding Input}"
+                                             Output="{Binding Output}">
+                                    
+                           
                                     <StackPanel>
                                         <ItemsControl Height="50" ItemsSource="{Binding Columns}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
                                                     <StackPanel Orientation="Horizontal">
-                                                        <nodify:NodeOutput DataContext="{Binding Connector}"
-                                                            Anchor="{Binding Anchor, Mode=OneWayToSource}"
-                                                            Header="{Binding Path=DataContext.ColumnName,
-                                                            RelativeSource={RelativeSource  AncestorType=StackPanel} }"
-                                                            IsConnected="{Binding IsConnected}">
 
-                                                            <nodify:NodeOutput.Style>
-                                                                <Style TargetType="{x:Type nodify:NodeOutput}">
-                                                                    <Setter Property="Template">
-                                                                        <Setter.Value>
-                                                                            <ControlTemplate TargetType="{x:Type nodify:NodeOutput}">
-                                                                                <TextBlock Text="{TemplateBinding Header}" />
-                                                                            </ControlTemplate>
-                                                                        </Setter.Value>
-                                                                    </Setter>
-                                                                </Style>
-                                                            </nodify:NodeOutput.Style>
-
-                                                        </nodify:NodeOutput>
                                                     </StackPanel>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
                                     </StackPanel>
+
+                                    <nodify:Node.InputConnectorTemplate>
+                                        <DataTemplate DataType="{x:Type vmNode:ConnectorVM}">
+                                            <nodify:NodeInput
+                                                Anchor="{Binding Anchor, Mode=OneWayToSource}"
+                                                Header="{Binding Title}"
+                                                IsConnected="True" />
+                                        </DataTemplate>
+                                    </nodify:Node.InputConnectorTemplate>
+
+                                    <nodify:Node.OutputConnectorTemplate>
+                                        <DataTemplate DataType="{x:Type vmNode:ConnectorVM}">
+                                            <nodify:NodeOutput
+                                                Anchor="{Binding Anchor, Mode=OneWayToSource}"
+                                                Header="{Binding Title}"
+                                                IsConnected="True" />
+                                        </DataTemplate>
+                                    </nodify:Node.OutputConnectorTemplate>
+
 
                                 </nodify:Node>
                             </DataTemplate>

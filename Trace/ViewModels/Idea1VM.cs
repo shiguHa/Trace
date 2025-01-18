@@ -47,36 +47,8 @@ namespace Trace.ViewModels
         public Idea1NodeEditorVM()
         {
             this.PendingConnection = new(this);
-            var welcome = new NodeWithConnectorsVM
-            {
-                Title = "Welcome",
-                Input = new ObservableCollection<ConnectorVM>
-            {
-                new ConnectorVM
-                {
-                    Title = "In"
-                }
-            },
-                Output = new ObservableCollection<ConnectorVM>
-            {
-                new ConnectorVM
-                {
-                    Title = "Out"
-                }
-            }
-            };
 
-            var nodify = new NodeWithConnectorsVM
-            {
-                Title = "To Nodify",
-                Input = new ObservableCollection<ConnectorVM>
-            {
-                new ConnectorVM
-                {
-                    Title = "In"
-                }
-            }
-            };
+
 
             var testTable = new NodeDBTableVM
             {
@@ -88,11 +60,10 @@ namespace Trace.ViewModels
                 }
             };
 
-            Nodes.Add(welcome);
-            Nodes.Add(nodify);
+            testTable.SetInput(new ConnectorVM { Title = "In" });
+            testTable.SetOutput(new ConnectorVM { Title = "Out" });
             Nodes.Add(testTable);
 
-            this.Connect(welcome.Output[0], nodify.Input[0]);
         }
 
         public override void Connect(ConnectorVM source, ConnectorVM target)
