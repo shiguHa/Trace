@@ -57,12 +57,25 @@ namespace Trace.ViewModels
                 {
                     new ColumnVM { ColumnName = "Column1", DataType = "int" },
                     new ColumnVM { ColumnName = "Column2", DataType = "string" }
-                }
+                },
+                In = new ConnectorVM { Title = "In" },
+                Out = new ConnectorVM { Title = "Out" }
             };
 
-            testTable.SetInput(new ConnectorVM { Title = "In" });
-            testTable.SetOutput(new ConnectorVM { Title = "Out" });
+            var testTable2 = new NodeDBTableVM
+            {
+                TableName = "TestTable2",
+                Columns = new ObservableCollection<ColumnVM>
+                {
+                    new ColumnVM { ColumnName = "Column1", DataType = "int" },
+                    new ColumnVM { ColumnName = "Column2", DataType = "string" }
+                },
+                In = new ConnectorVM { Title = "In" },
+                Out = new ConnectorVM { Title = "Out" }
+            };
+
             Nodes.Add(testTable);
+            Nodes.Add(testTable2);
 
         }
 

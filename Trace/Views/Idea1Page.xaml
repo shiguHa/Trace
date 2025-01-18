@@ -42,7 +42,6 @@
                             <DataTemplate DataType="{x:Type vmNode:NodeWithConnectorsVM}">
 
                                 <nodify:Node
-                                    Header="{Binding Title}"
                                     Input="{Binding Input}"
                                     Output="{Binding Output}">
                                     <nodify:Node.InputConnectorTemplate>
@@ -66,11 +65,33 @@
                             </DataTemplate>
 
                             <DataTemplate DataType="{x:Type vmNode:NodeDBTableVM}">
-                                <nodify:Node Header="{Binding TableName}"
-                                             Input="{Binding Input}"
-                                             Output="{Binding Output}">
+                                <nodify:Node>
+
+                                    <nodify:Node.Header>
+                                        <StackPanel>
+                                            <Grid >
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <nodify:NodeInput
+                                                    DataContext="{Binding In}"
+                                                    Header="{Binding Title}"
+                                                    Anchor="{Binding Anchor, Mode=OneWayToSource}"
+                                                    IsConnected="True" 
+                                                    Grid.Column="0"/>
+                                                <nodify:NodeOutput
+                                                    DataContext="{Binding Out}"
+                                                    Header="{Binding Title}"
+                                                    Anchor="{Binding Anchor, Mode=OneWayToSource}"
+                                                    IsConnected="True" 
+                                                    Grid.Column="1"/>
+                                            </Grid>
+                                            <TextBlock Text="{Binding TableName}" />
+
+                                        </StackPanel>
+                                    </nodify:Node.Header>
                                     
-                           
                                     <StackPanel>
                                         <ItemsControl Height="50" ItemsSource="{Binding Columns}">
                                             <ItemsControl.ItemTemplate>
@@ -87,8 +108,9 @@
                                         <DataTemplate DataType="{x:Type vmNode:ConnectorVM}">
                                             <nodify:NodeInput
                                                 Anchor="{Binding Anchor, Mode=OneWayToSource}"
-                                                Header="{Binding Title}"
-                                                IsConnected="True" />
+                                                IsConnected="True" 
+                                                Header="In"
+                                                Margin="0,0,0,0"/>
                                         </DataTemplate>
                                     </nodify:Node.InputConnectorTemplate>
 
@@ -96,8 +118,9 @@
                                         <DataTemplate DataType="{x:Type vmNode:ConnectorVM}">
                                             <nodify:NodeOutput
                                                 Anchor="{Binding Anchor, Mode=OneWayToSource}"
-                                                Header="{Binding Title}"
-                                                IsConnected="True" />
+                                                IsConnected="True"
+                                                Header="Out"
+                                                Margin="0,0,0,0"/>
                                         </DataTemplate>
                                     </nodify:Node.OutputConnectorTemplate>
 
