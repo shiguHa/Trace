@@ -8,6 +8,7 @@
     xmlns:nodify="clr-namespace:Nodify;assembly=Nodify"
     xmlns:vm="clr-namespace:Trace.ViewModels"
     xmlns:vmNode="clr-namespace:Trace.ViewModels.Node"
+    xmlns:converter="clr-namespace:Trace.Converters"
     Title="Idea1Page"
     d:DataContext="{d:DesignInstance vm:Idea1VM}"
     d:DesignHeight="450"
@@ -30,11 +31,13 @@
                         Connections="{Binding Connections}"
                         DataContext="{Binding NodeEditor}"
                         ItemsSource="{Binding Nodes}"
-                        PendingConnection="{Binding PendingConnection}">
+                        PendingConnection="{Binding PendingConnection}"
+                        SelectedItems="{Binding SelectedNodes}">
 
                         <nodify:NodifyEditor.ItemContainerStyle>
                             <Style TargetType="{x:Type nodify:ItemContainer}">
                                 <Setter Property="Location" Value="{Binding Location}" />
+                                <Setter Property="ActualSize" Value="{Binding Size, Mode=OneWayToSource}" />
                             </Style>
                         </nodify:NodifyEditor.ItemContainerStyle>
 
@@ -65,7 +68,8 @@
                             </DataTemplate>
 
                             <DataTemplate DataType="{x:Type vmNode:NodeDBTableVM}">
-                                <nodify:Node>
+                                <nodify:Node
+                                    >
 
                                     <nodify:Node.Header>
                                         <StackPanel>
@@ -126,6 +130,12 @@
 
 
                                 </nodify:Node>
+                            </DataTemplate>
+
+                            <DataTemplate DataType="{x:Type vmNode:GroupingNodeVM}">
+                                <nodify:GroupingNode
+                                    ActualSize="{Binding ActualSize}" />
+
                             </DataTemplate>
 
                         </nodify:NodifyEditor.Resources>

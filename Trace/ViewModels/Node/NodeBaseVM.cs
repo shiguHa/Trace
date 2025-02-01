@@ -8,5 +8,8 @@ namespace Trace.ViewModels.Node
     {
         [ObservableProperty]
         private Point _location;
+
+        [ObservableProperty]
+        private Size _size;
     }
 }
